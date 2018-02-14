@@ -15,10 +15,7 @@ Install:
 npm i memcache-client-memoizer
 ```
 
-## Note:
-Rejected promises and callbacks called with an `err` argument are not memoized, since that's a pretty bad idea :)
-
-## Promise Memoization
+## API
 `memoizer(options)`
 
 ### Arguments
@@ -30,6 +27,9 @@ Rejected promises and callbacks called with an `err` argument are not memoized, 
 ```javascript
   const exampleKeyFn = ({ name, color }) => `${name}:${color}`
 ```
+
+### Note:
+Rejected promises and callbacks called with an `err` argument are not memoized, since that's a pretty bad idea :)
 
 ### Example:
 ```javascript
