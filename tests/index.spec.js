@@ -5,6 +5,16 @@ const MemcacheClient = require('memcache-client')
 const memoizer = require('../')
 
 describe('index', () => {
+  let client
+
+  beforeEach(() => {
+    client = new MemcacheClient({ server: 'localhost:11211' })
+  })
+
+  afterEach(() => {
+    client && client.shutdown()
+  })
+
   it('throws on missing input', () => {
     [
       [],
@@ -16,7 +26,6 @@ describe('index', () => {
   })
 
   it('passes all fn args to keyFn', async () => {
-    const client = new MemcacheClient({ server: 'localhost:11211' })
     const keyFn = jest.fn((...args) => args.join())
     const fn = jest.fn((value) => Promise.resolve(value))
 
@@ -28,7 +37,6 @@ describe('index', () => {
   })
 
   it('calls a function not yet memoized', async () => {
-    const client = new MemcacheClient({ server: 'localhost:11211' })
     const keyFn = () => uuidv4()
     const fn = jest.fn((value) => Promise.resolve(value))
 
@@ -42,7 +50,6 @@ describe('index', () => {
 
   it('memoizes a function and gets the next call from cache', async () => {
     const key = uuidv4()
-    const client = new MemcacheClient({ server: 'localhost:11211' })
     const keyFn = () => key
     const fn = jest.fn((value) => Promise.resolve(value))
 
