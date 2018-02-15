@@ -22,11 +22,10 @@ npm i memcache-client-memoizer
 * `options`: `object`. Required. An object with the following keys:
   * `client`: `memcache-client instance`. Required. A [memcache-client](https://www.npmjs.com/package/memcache-client) instance.
   * `fn`: `Function`. Required. The function to memoize, must return a Promise.
-  * `keyFn`: `(args to fn) => 'key-string'`. Required. A function which returns a string cache-key for memcached. This 
-  function is called with the same arguments as `fn`, allowing you to create a dynamic cache-key, for example: 
-```javascript
-  const exampleKeyFn = ({ name, color }) => `${name}:${color}`
-```
+  * `keyFn`: `(args to fn) => 'key-string'`. Required. A function which returns a string cache-key for memcached. This function is called with the same arguments as `fn`, allowing you to create a dynamic cache-key, for example: 
+    ```javascript
+    const exampleKeyFn = ({ name, color }) => `${name}:${color}`
+    ```
   * `setOptions`: `object`. Optional. `memcached-client` [command options](https://www.npmjs.com/package/memcache-client#command-options).
 
 ### Note:
