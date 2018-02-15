@@ -27,6 +27,7 @@ npm i memcache-client-memoizer
 ```javascript
   const exampleKeyFn = ({ name, color }) => `${name}:${color}`
 ```
+  * `setOptions`: `object`. Optional. `memcached-client` [command options](https://www.npmjs.com/package/memcache-client#command-options).
 
 ### Note:
 Rejected promises and callbacks called with an `err` argument are not memoized, since that's a pretty bad idea :)
