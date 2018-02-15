@@ -1,6 +1,6 @@
 {
   "name": "memcache-client-memoizer",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Memoizes promise-returning functions via memcache-client",
   "main": "index.js",
   "scripts": {
@@ -31,6 +31,13 @@
     "uuid": "^3.2.1"
   },
   "standard": {
-    "globals": [ "jest", "beforeEach", "afterEach", "describe", "it", "expect" ]
+    "globals": [
+      "jest",
+      "beforeEach",
+      "afterEach",
+      "describe",
+      "it",
+      "expect"
+    ]
   }
 }
