@@ -37,7 +37,7 @@ const MemcacheClient = require('memcache-client')
 const memoizer = require('memcache-client-memoizer')
 
 const client = new MemcacheClient({ server: 'localhost:11211' })
-const fnToMemoize = ({ name, color }) => Promise.resolve(input)
+const fnToMemoize = ({ name, color }) => Promise.resolve({ name, color })
 
 const memoizedFn = memoizer({
   client,
