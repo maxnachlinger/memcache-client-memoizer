@@ -1,6 +1,6 @@
 {
   "name": "memcache-client-memoizer",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Memoizes promise-returning functions via memcache-client",
   "main": "index.js",
   "scripts": {
