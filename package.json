@@ -21,14 +21,14 @@
   "author": "Max Nachlinger",
   "license": "ISC",
   "dependencies": {
-    "lodash.isfunction": "^3.0.9"
+    "lodash.isfunction": "3.0.9"
   },
   "devDependencies": {
-    "jest": "^22.3.0",
-    "memcache-client": "^0.10.0",
-    "snazzy": "^7.0.0",
-    "standard": "^10.0.3",
-    "uuid": "^3.2.1"
+    "jest": "22.3.0",
+    "memcache-client": "0.10.0",
+    "snazzy": "7.0.0",
+    "standard": "10.0.3",
+    "uuid": "3.2.1"
   },
   "standard": {
     "globals": [

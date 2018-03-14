@@ -19,7 +19,8 @@ module.exports = ({ client, fn, keyFn, setOptions } = {}) => {
         }
 
         return fn(...args)
-          .then((result) => client.set(key, result, setOptions).then(() => Promise.resolve(result)))
+          .then((result) => client.set(key, result, setOptions)
+            .then(() => Promise.resolve(result)))
       })
   }
 }
