@@ -1,28 +1,38 @@
 const isFunction = require('lodash.isfunction')
 
-module.exports = ({ client, fn, keyFn, setOptions } = {}) => {
-  if (!client || client.constructor.name !== 'MemcacheClient' || !client.get || !client.set) {
-    throw new Error('All arguments are required')
+const getClient = ({client, clientFn} = {}) => {
+  if (!client && !clientFn) {
+    throw new Error('You must pass either a client or clientFn.')
   }
+
+  if (client && (!client.get || !client.set)) {
+    throw new Error('Client should expose a get and set method.')
+  }
+
+  if (clientFn && !isFunction(clientFn)) {
+    throw new Error('clientFn must be a function.')
+  }
+
+  return client || clientFn()
+}
+
+module.exports = ({client, clientFn, fn, keyFn, setOptions, cacheResultTransformFn = (x) => x} = {}) => {
+  const localClient = getClient({client, clientFn})
 
   if ([fn, keyFn].find((value) => !isFunction(value))) {
     throw new Error('All arguments are required and should be functions')
   }
 
-  return (...args) => {
+  return async (...args) => {
     const key = keyFn(...args)
 
-    return client.get(key)
-      .then(({ value } = {}) => {
-        if (value) {
-          return Promise.resolve(value)
-        }
+    const cachedValue = await localClient.get(key)
+    if (cachedValue) {
+      return cacheResultTransformFn(cachedValue)
+    }
 
-        return fn(...args)
-          .then((result) => {
-            client.set(key, result, setOptions)
-            return Promise.resolve(result)
-          })
-      })
+    const value = await fn(...args)
+    localClient.set(key, value, setOptions)
+    return value
   }
 }

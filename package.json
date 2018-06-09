@@ -24,10 +24,9 @@
     "lodash.isfunction": "3.0.9"
   },
   "devDependencies": {
-    "jest": "22.3.0",
-    "memcache-client": "0.10.0",
-    "snazzy": "7.0.0",
-    "standard": "10.0.3",
+    "jest": "23.1.0",
+    "snazzy": "7.1.1",
+    "standard": "11.0.1",
     "uuid": "3.2.1"
   },
   "standard": {
