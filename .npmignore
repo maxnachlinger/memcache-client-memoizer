@@ -1,4 +1,8 @@
-tests
 .idea
+dist/tests
+tests
+.npmignore
 .travis.yml
 .gitignore
+tsconfig.json
+tslint.json

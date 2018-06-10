@@ -1,6 +1,6 @@
 ## memcache-client-memoizer
 
-A function memoizer using [memcache-client](https://www.npmjs.com/package/memcache-client).
+A function memoizer using a get/set cache client like [memcache-client](https://www.npmjs.com/package/memcache-client).
 
 [![travis][travis-image]][travis-url]
 [![npm][npm-image]][npm-url]
@@ -20,29 +20,36 @@ npm i memcache-client-memoizer
 
 ### Arguments
 * `options`: `object`. Required. An object with the following keys:
-  * `client`: `memcache-client instance`. Required. A [memcache-client](https://www.npmjs.com/package/memcache-client) instance.
+  * `client`: `{ get: (string) => Promise, set: (string, any) }`. A cache client instance, must have a `get` and `set` 
+  method. The `get` method must return a promise.
+  * `clientProviderFn`: `() => client` A function which returns a `client` (defined above);
+  (Either a `client` or `clientProviderFn` must be passed.)
   * `fn`: `Function`. Required. The function to memoize, must return a Promise.
-  * `keyFn`: `(args to fn) => 'key-string'`. Required. A function which returns a string cache-key for memcached. This function is called with the same arguments as `fn`, allowing you to create a dynamic cache-key, for example: 
+  * `keyFn`: `(args to fn) => 'key-string'`. Required. A function which returns a string cache-key for memcached. This 
+  function is called with the same arguments as `fn`, allowing you to create a dynamic cache-key, for example: 
     ```javascript
     const exampleKeyFn = ({ name, color }) => `${name}:${color}`
     ```
-  * `setOptions`: `object`. Optional. `memcached-client` [command options](https://www.npmjs.com/package/memcache-client#command-options).
+  * `setOptions`: `object`. Optional. For `memcached-client` this can be 
+  [command options](https://www.npmjs.com/package/memcache-client#command-options).
+  * `cacheResultTransformFn`. `(result-from-cache) => transformed-result`. Function to transform cache-result, defaults 
+  to `(x) => x`. This is useful if your cache service sends along the value in a different form than is returned by your `fn`.
 
 ### Note:
 Rejected promises are not memoized - since that's probably not what you want :)
 
-### Example:
+### memcache-client example:
 ```javascript
 const MemcacheClient = require('memcache-client')
 const memoizer = require('memcache-client-memoizer')
 
-const client = new MemcacheClient({ server: 'localhost:11211' })
 const fnToMemoize = ({ name, color }) => Promise.resolve({ name, color })
 
 const memoizedFn = memoizer({
-  client,
+  clientProviderFn: () => new MemcacheClient({ server: 'localhost:11211' }),
   fn: fnToMemoize,
-  keyFn: ({ name, color }) => `${name}:${color}`
+  keyFn: ({ name, color }) => `${name}:${color}`,
+  cacheResultTransformFn: ({value}) => value
 })
 
 memoizedFn({name: 'Max', color: 'blue'})
