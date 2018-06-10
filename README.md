@@ -21,8 +21,8 @@ npm i memcache-client-memoizer
 ### Arguments
 * `options`: `object`. Required. An object with the following keys:
   * `client`: `{ get: (string) => Promise, set: (string, any) }`. A cache client instance, must have a `get` and `set` method. The `get` method must return a promise.
-  * `clientFn`: `() => client` A function which returns a `client` (defined above);
-  (Either a `client` or `clientFn` must be passed.)
+  * `clientProviderFn`: `() => client` A function which returns a `client` (defined above);
+  (Either a `client` or `clientProviderFn` must be passed.)
   * `fn`: `Function`. Required. The function to memoize, must return a Promise.
   * `keyFn`: `(args to fn) => 'key-string'`. Required. A function which returns a string cache-key for memcached. This function is called with the same arguments as `fn`, allowing you to create a dynamic cache-key, for example: 
     ```javascript
@@ -42,7 +42,7 @@ const memoizer = require('memcache-client-memoizer')
 const fnToMemoize = ({ name, color }) => Promise.resolve({ name, color })
 
 const memoizedFn = memoizer({
-  clientFn: () => new MemcacheClient({ server: 'localhost:11211' }),
+  clientProviderFn: () => new MemcacheClient({ server: 'localhost:11211' }),
   fn: fnToMemoize,
   keyFn: ({ name, color }) => `${name}:${color}`,
   cacheResultTransformFn: ({value}) => value

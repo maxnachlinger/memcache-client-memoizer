@@ -2,9 +2,12 @@
   "name": "memcache-client-memoizer",
   "version": "0.0.4",
   "description": "Memoizes promise-returning functions via memcache-client",
-  "main": "index.js",
+  "main": "dist/index",
+  "typings": "dist/index",
   "scripts": {
-    "pretest": "./node_modules/.bin/standard --verbose | ./node_modules/.bin/snazzy",
+    "build": "./node_modules/.bin/tsc",
+    "lint": "./node_modules/.bin/tslint --format stylish --project .",
+    "pretest": "npm run lint && npm run build",
     "test": "jest"
   },
   "homepage": "https://github.com/maxnachlinger/memcache-client-memoizer",
@@ -16,27 +19,18 @@
     "url": "https://github.com/maxnachlinger/memcache-client-memoizer/issues"
   },
   "engines": {
-    "node": "8.x.x"
+    "node": ">=8"
   },
   "author": "Max Nachlinger",
   "license": "ISC",
-  "dependencies": {
-    "lodash.isfunction": "3.0.9"
-  },
+  "dependencies": {},
   "devDependencies": {
-    "jest": "23.1.0",
-    "snazzy": "7.1.1",
-    "standard": "11.0.1",
-    "uuid": "3.2.1"
-  },
-  "standard": {
-    "globals": [
-      "jest",
-      "beforeEach",
-      "afterEach",
-      "describe",
-      "it",
-      "expect"
-    ]
+    "@types/jest": "^23.0.0",
+    "@types/uuid": "^3.4.3",
+    "jest": "^23.1.0",
+    "tslint": "^5.10.0",
+    "tslint-xo": "^0.8.0",
+    "typescript": "^2.9.1",
+    "uuid": "^3.2.1"
   }
 }
