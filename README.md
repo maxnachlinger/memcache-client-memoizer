@@ -41,7 +41,7 @@ Rejected promises are not memoized - since that's probably not what you want :)
 ### memcache-client example:
 ```javascript
 const MemcacheClient = require('memcache-client')
-const memoizer = require('memcache-client-memoizer')
+const { memoizer } = require('memcache-client-memoizer')
 
 const fnToMemoize = ({ name, color }) => Promise.resolve({ name, color })
 
