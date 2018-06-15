@@ -1,6 +1,6 @@
 import {v4} from 'uuid';
 import cache from './test-cache';
-import memoizer, {IMemoizerArgs} from '../index';
+import {memoizer, IMemoizerArgs} from '../index';
 
 describe('index', () => {
 	it('throws on missing input', () => {

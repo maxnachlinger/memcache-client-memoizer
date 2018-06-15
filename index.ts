@@ -30,7 +30,7 @@ const getClient = (client?: ICacheClient, clientProviderFn?: ICacheClientProvide
 	throw new Error('You must pass either a client or clientProviderFn.');
 };
 
-export default (args: IMemoizerArgs): InputFunction => {
+const memoizer = (args: IMemoizerArgs): InputFunction => {
 	const {client, clientProviderFn, fn, keyFn, setOptions = {}, cacheResultTransformFn = (x: any) => x} = args;
 	const localClient = getClient(client, clientProviderFn);
 
@@ -51,3 +51,5 @@ export default (args: IMemoizerArgs): InputFunction => {
 		return value;
 	};
 };
+
+export {memoizer};
