@@ -20,7 +20,7 @@ npm i memcache-client-memoizer
 
 ### Arguments
 * `options`: `object`. Required. An object with the following keys:
-  * `client`: `{ get: (string) => Promise, set: (string, any) }`. A cache client instance, must have a `get` and `set` 
+  * `client`: `{ get: (string) => Promise, set: (string, value, options) }`. A cache client instance, must have a `get` and `set` 
   method. The `get` method must return a promise.
   * `clientProviderFn`: `() => client` A function which returns a `client` (defined above);
   (Either a `client` or `clientProviderFn` must be passed.)
