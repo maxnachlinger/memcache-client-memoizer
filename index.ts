@@ -1,9 +1,9 @@
 export type InputFunction = (...args: any[]) => Promise<any>;
 
 export interface ICacheClient {
-	get(key: string): Promise<any>;
+	get(key: any): Promise<any>;
 
-	set(key: string, value?: any, options?: any): any;
+	set(key: any, value?: any, options?: any): any;
 }
 
 export type ICacheClientProvider = () => ICacheClient;
