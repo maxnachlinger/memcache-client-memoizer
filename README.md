@@ -61,4 +61,28 @@ memoizedFn({name: 'Max', color: 'blue'})
 ```
 
 ### [catbox](https://www.npmjs.com/package/catbox) example:
+```javascript
+const Catbox = require('catbox');
+const Memory = require('catbox-memory');
 
+const cacheTtlMilliseconds = 1000 * 60 * 5; // 5 min
+const client = new Catbox.Client(Memory);
+await client.start();
+
+const fnToMemoize = ({ name, color }) => Promise.resolve({ name, color })
+
+const memoizedFn = memoizer({
+  client,
+  fn: fnToMemoize,
+  keyFn: ({ name, color }) => ({ segment: 'test', id: 'test-cache' }), // this can return anything
+  setOptions: cacheTtlMilliseconds,
+  cacheResultTransformFn: ({ item }) => item,
+})
+
+memoizedFn({name: 'Max', color: 'blue'})
+  .then((result) => { ... })  // cache miss, fill cache, returns {name: 'Max', color: 'blue'}
+
+// later on...
+memoizedFn({name: 'Max', color: 'blue'})
+  .then((result) => { ... })  // cache hit, returns {name: 'Max', color: 'blue'}
+```
