@@ -1,6 +1,6 @@
 ## memcache-client-memoizer
 
-A function memoizer using a get/set cache client like [memcache-client](https://www.npmjs.com/package/memcache-client).
+A function memoizer using a get/set cache client.
 
 [![travis][travis-image]][travis-url]
 [![npm][npm-image]][npm-url]
@@ -30,7 +30,7 @@ npm i memcache-client-memoizer
     ```javascript
     const exampleKeyFn = ({ name, color }) => `${name}:${color}` // can be anything
     ```
-  * `setOptions`: `object`. Optional. For `memcached-client` this can be 
+  * `setOptions`: `anything`. Optional. For `memcached-client` this can be 
   [command options](https://www.npmjs.com/package/memcache-client#command-options).
   * `cacheResultTransformFn`. `(result-from-cache) => transformed-result`. Function to transform cache-result, defaults 
   to `(x) => x`. This is useful if your cache service sends along the value in a different form than is returned by your `fn`.
@@ -38,7 +38,7 @@ npm i memcache-client-memoizer
 ### Note:
 Rejected promises are not memoized - since that's probably not what you want :)
 
-### memcache-client example:
+### [memcache-client](https://www.npmjs.com/package/memcache-client) example:
 ```javascript
 const MemcacheClient = require('memcache-client')
 const { memoizer } = require('memcache-client-memoizer')
@@ -59,3 +59,6 @@ memoizedFn({name: 'Max', color: 'blue'})
 memoizedFn({name: 'Max', color: 'blue'})
   .then((result) => { ... })  // cache hit, returns {name: 'Max', color: 'blue'}
 ```
+
+### [catbox](https://www.npmjs.com/package/catbox) example:
+
