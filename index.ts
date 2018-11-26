@@ -12,10 +12,9 @@ export interface IMemoizerArgs {
 	readonly client?: ICacheClient;
 	readonly clientProviderFn?: ICacheClientProvider;
 	readonly fn: InputFunction;
+	readonly setOptions?: any;
 
 	keyFn(...args: any[]): string;
-
-	readonly setOptions?: any;
 
 	cacheResultTransformFn?(arg: any): any;
 
