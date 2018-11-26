@@ -18,6 +18,8 @@ export interface IMemoizerArgs {
 	readonly setOptions?: any;
 
 	cacheResultTransformFn?(arg: any): any;
+
+	skipCacheFn?(...args: any[]): boolean;
 }
 
 const getClient = (client?: ICacheClient, clientProviderFn?: ICacheClientProvider): ICacheClient => {
@@ -31,7 +33,7 @@ const getClient = (client?: ICacheClient, clientProviderFn?: ICacheClientProvide
 };
 
 const memoizer = (args: IMemoizerArgs): InputFunction => {
-	const {client, clientProviderFn, fn, keyFn, setOptions = {}, cacheResultTransformFn = (x: any) => x} = args;
+	const {client, clientProviderFn, fn, keyFn, setOptions = {}, cacheResultTransformFn = (x: any) => x, skipCacheFn = () => false} = args;
 	const localClient = getClient(client, clientProviderFn);
 
 	if (!fn || !keyFn) {
@@ -39,6 +41,10 @@ const memoizer = (args: IMemoizerArgs): InputFunction => {
 	}
 
 	return async (...fnArgs) => {
+		if (skipCacheFn(...fnArgs)) {
+			return fn(...fnArgs);
+		}
+
 		const key = keyFn(...fnArgs);
 
 		const cachedValue = await localClient.get(key);
