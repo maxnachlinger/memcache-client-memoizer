@@ -34,6 +34,8 @@ npm i memcache-client-memoizer
   [command options](https://www.npmjs.com/package/memcache-client#command-options).
   * `cacheResultTransformFn`. `(result-from-cache) => transformed-result`. Function to transform cache-result, defaults 
   to `(x) => x`. This is useful if your cache service sends along the value in a different form than is returned by your `fn`.
+  * `skipCacheFn`:  `(args to fn) => Boolean`. Optional. A function which indicates that the call to `fn` should skip the 
+  cache.
 
 ### Note:
 Rejected promises are not memoized - since that's probably not what you want :)
@@ -49,7 +51,8 @@ const memoizedFn = memoizer({
   clientProviderFn: () => new MemcacheClient({ server: 'localhost:11211' }),
   fn: fnToMemoize,
   keyFn: ({ name, color }) => `${name}:${color}`, // this can return anything
-  cacheResultTransformFn: ({value}) => value
+  cacheResultTransformFn: ({value}) => value,
+  skipCacheFn: ({ name, color }) => false,
 })
 
 memoizedFn({name: 'Max', color: 'blue'})
@@ -77,6 +80,7 @@ const memoizedFn = memoizer({
   keyFn: ({ name, color }) => ({ segment: 'test', id: 'test-cache' }), // this can return anything
   setOptions: cacheTtlMilliseconds,
   cacheResultTransformFn: ({ item }) => item,
+  skipCacheFn: ({ name, color }) => false,
 })
 
 memoizedFn({name: 'Max', color: 'blue'})

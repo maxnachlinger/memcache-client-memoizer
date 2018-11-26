@@ -99,4 +99,24 @@ describe('index', () => {
 		expect(fn).not.toHaveBeenCalled();
 		expect(result).toBe('TEST');
 	});
+
+	it('skips cache if skipCacheFn returns true', async () => {
+		const client = {
+			set: jest.fn(),
+			get: jest.fn(),
+		};
+
+		const keyFn = jest.fn();
+		const fn = jest.fn(async value => Promise.resolve(value));
+
+		const memoized = memoizer({client, fn, keyFn, skipCacheFn: () => true});
+		expect(memoized).toBeTruthy();
+
+		const result = await memoized('test');
+		expect(fn).toHaveBeenCalled();
+		expect(result).toBe('test');
+		expect(keyFn).not.toHaveBeenCalled();
+		expect(client.get).not.toHaveBeenCalled();
+		expect(client.set).not.toHaveBeenCalled();
+	});
 });
