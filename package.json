@@ -1,6 +1,6 @@
 {
   "name": "memcache-client-memoizer",
-  "version": "2.1.1",
+  "version": "2.2.0",
   "description": "Memoizes promise-returning functions via memcache-client",
   "main": "dist/index",
   "typings": "dist/index",
