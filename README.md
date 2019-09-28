@@ -1,11 +1,10 @@
 ## memcache-client-memoizer
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/maxnachlinger/memcache-client-memoizer.svg)](https://greenkeeper.io/)
-
 A function memoizer using a get/set cache client.
 
 [![travis][travis-image]][travis-url]
 [![npm][npm-image]][npm-url]
+[![Greenkeeper badge](https://badges.greenkeeper.io/maxnachlinger/memcache-client-memoizer.svg)](https://greenkeeper.io/)
 
 [travis-image]: https://travis-ci.org/maxnachlinger/memcache-client-memoizer.svg?branch=master
 [travis-url]: https://travis-ci.org/maxnachlinger/memcache-client-memoizer
