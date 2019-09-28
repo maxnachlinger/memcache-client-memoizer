@@ -1,13 +1,12 @@
 {
   "name": "memcache-client-memoizer",
-  "version": "2.2.1",
+  "version": "2.2.0",
   "description": "Memoizes promise-returning functions via memcache-client",
   "main": "dist/index",
   "typings": "dist/index",
   "scripts": {
     "build": "$(npm bin)/tsc",
-    "lint": "$(npm bin)/tslint --format stylish --project .",
-    "pretest": "npm run lint && npm run build",
+    "pretest": "npm run build",
     "test": "$(npm bin)/jest dist/tests",
     "prepublishOnly": "npm test"
   },
@@ -29,8 +28,6 @@
     "@types/jest": "^24.0.18",
     "@types/uuid": "^3.4.5",
     "jest": "^25.0.0",
-    "tslint": "^5.20.0",
-    "tslint-xo": "^0.16.0",
     "typescript": "^3.6.3",
     "uuid": "^3.3.3"
   }

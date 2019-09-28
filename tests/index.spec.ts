@@ -5,8 +5,8 @@ import {memoizer, IMemoizerArgs} from '../index';
 describe('index', () => {
 	it('throws on missing input', () => {
 		const args: IMemoizerArgs = {
-			keyFn: s => s.toString(),
-			fn: async s => Promise.resolve(s)
+			keyFn: (s: {}): string => s.toString(),
+			fn: async (s): Promise<any> => Promise.resolve(s)
 		};
 		expect(() => memoizer(args)).toThrow();
 	});
@@ -27,7 +27,7 @@ describe('index', () => {
 	it('calls a function not yet memoized', async () => {
 		const client = cache();
 
-		const keyFn = () => v4();
+		const keyFn = v4;
 		const fn = jest.fn(async value => Promise.resolve(value));
 
 		const memoized = memoizer({client, fn, keyFn});
@@ -42,8 +42,8 @@ describe('index', () => {
 		const client = cache();
 
 		const key = v4();
-		const keyFn = () => key;
-		const fn = jest.fn(async value => Promise.resolve(value));
+		const keyFn = (): string => key;
+		const fn = jest.fn(async (value): Promise<any> => Promise.resolve(value));
 
 		const memoized = memoizer({client, fn, keyFn});
 		expect(memoized).toBeTruthy();
@@ -62,8 +62,8 @@ describe('index', () => {
 		const client = cache();
 
 		const key = v4();
-		const keyFn = () => key;
-		const fn = jest.fn(async value => Promise.resolve(value));
+		const keyFn = (): string => key;
+		const fn = jest.fn(async (value): Promise<any> => Promise.resolve(value));
 
 		const memoized = memoizer({client, fn, keyFn});
 		expect(memoized).toBeTruthy();
@@ -78,7 +78,7 @@ describe('index', () => {
 		expect(result1).toBe('test');
 		fn.mockClear();
 
-		client.set(key, null);
+		client.set(key, undefined);
 		const result2 = await memoized('test');
 		expect(fn).toHaveBeenCalled();
 		expect(result2).toBe('test');
@@ -87,10 +87,10 @@ describe('index', () => {
 	it('calls cacheResultTransformFn with items from cache', async () => {
 		const key = v4();
 		const client = cache({[key]: 'test'});
-		const cacheResultTransformFn = (value: any) => value.toUpperCase();
+		const cacheResultTransformFn = (value: string): {} => value.toUpperCase();
 
-		const keyFn = () => key;
-		const fn = jest.fn(async value => Promise.resolve(value));
+		const keyFn = (): string => key;
+		const fn = jest.fn(async (value): Promise<any> => Promise.resolve(value));
 
 		const memoized = memoizer({client, fn, keyFn, cacheResultTransformFn});
 		expect(memoized).toBeTruthy();
@@ -109,7 +109,7 @@ describe('index', () => {
 		const keyFn = jest.fn();
 		const fn = jest.fn(async value => Promise.resolve(value));
 
-		const memoized = memoizer({client, fn, keyFn, skipCacheFn: () => true});
+		const memoized = memoizer({client, fn, keyFn, skipCacheFn: (): boolean => true});
 		expect(memoized).toBeTruthy();
 
 		const result = await memoized('test');

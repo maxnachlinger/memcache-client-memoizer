@@ -32,14 +32,14 @@ const getClient = (client?: ICacheClient, clientProviderFn?: ICacheClientProvide
 };
 
 const memoizer = (args: IMemoizerArgs): InputFunction => {
-	const {client, clientProviderFn, fn, keyFn, setOptions = {}, cacheResultTransformFn = (x: any) => x, skipCacheFn = () => false} = args;
+	const {client, clientProviderFn, fn, keyFn, setOptions = {}, cacheResultTransformFn = (x: {}): {} => x, skipCacheFn = (): boolean => false} = args;
 	const localClient = getClient(client, clientProviderFn);
 
 	if (!fn || !keyFn) {
 		throw new Error('You must pass both a fn and a keyFn.');
 	}
 
-	return async (...fnArgs) => {
+	return async (...fnArgs): Promise<any> => {
 		if (skipCacheFn(...fnArgs)) {
 			return fn(...fnArgs);
 		}

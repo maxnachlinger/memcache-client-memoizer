@@ -3,7 +3,7 @@ import {ICacheClient} from '../index';
 export default (initialValue: any = {}): ICacheClient => {
 	const cache = initialValue;
 	return {
-		set: (key, value) => (cache[key] = value),
-		get: async key => Promise.resolve(cache[key])
+		set: (key, value): void => (cache[key] = value),
+		get: async (key): Promise<any> => Promise.resolve(cache[key])
 	};
 };
